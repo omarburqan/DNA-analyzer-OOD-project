@@ -5,24 +5,7 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-
-
-int main(){
-	//std::string input ;
-	//cout << endl;
-	//cout << endl;
-	//cout << "please enter your command" << endl;
-	//cout << endl;
-	//getline(cin,input) ;
-	//cout << input << endl;
-	
-
-	
-  
-
-
-	
-	
+void oldTester(){
 	DnaSequenceList list;
 	list.newSequence("ACGT",(char*)"omar");
 	list.newSequence("ACGT");
@@ -36,11 +19,37 @@ int main(){
 	list.loadSequence((char*)"dna.rawdna");
 	list.loadSequence((char*)"dna.rawdna",(char*)"montaser");
 	
-	/*std::list<DnaSequence>::iterator it;
-	for(it = list.dna_list.begin(); it != list.dna_list.end(); ++it){
-		cout << *it  << endl;
-	}*/	
-	list.saveSequence(4);
 	
+	list.saveSequence(10);
+	list.saveSequence(4,(char*)"arar.rawdna");
+	list.saveSequence(9);
+	
+	list.dupSequence(8);
+	list.dupSequence(4,(char*)"unknown");
+	list.dupSequence(12,(char*)"unknown");
+
+}
+
+int main(){
+	std::string input ;
+	cout << endl;
+	cout << "please enter your command" << endl;
+	cout << endl;
+	getline(cin,input) ;
+	cout << input << endl;
+	
+	
+
+	
+		
 	return 0;
 }
+
+
+
+
+
+
+
+
+

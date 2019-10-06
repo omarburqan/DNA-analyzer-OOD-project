@@ -9,7 +9,7 @@ void DnaSequenceList::newSequence(const char* data,const char* seq_name){
 		ss << "seq" << (++default_name_counter);
 		seq_name = ss.str().c_str();
 	}
-	DnaSequence temp (data,seq_name);
+	DnaSequence temp(data,seq_name);
 	dna_list.push_back(temp); 
 	std::cout << temp << std::endl;
 }
@@ -41,54 +41,78 @@ void DnaSequenceList::loadSequence( char* file_name,const char* seq_name) {
 	}
 	else
 		throw "cant open file";
-	DnaSequence temp(line,seq_name);
-	dna_list.push_back(temp);
+	DnaSequence temp (line.c_str(),seq_name);
+	dna_list.push_back(temp); 
 	std::cout << temp << std::endl;
 }
 
 void DnaSequenceList::dupSequence(size_t seqId,const char* seq_name) {
-	/*if ( seq_name == NULL ) {
-		size_t count = 0; 
+	
+	if (NULL == seq_name){
+		int found = 0;
 		std::list<DnaSequence>::iterator it;
 		for(it = dna_list.begin(); it != dna_list.end(); ++it){
 			if ( it->m_id == seqId ){
-				seq_name = it->m_seqName.c_str();		
+				found = 1;
+				seq_name = it->m_seqName.c_str();
+				break;
 			}
 		}
-		for(it = dna_list.begin(); it != dna_list.end(); ++it){
-			if ( seq_name != NULL && it->m_seqName == seq_name ){
-				count++;		
-			}
-		}
-		if ( count > 0 ) {
-			std::stringstream ss;
-			ss << seq_name << "_" << count;
-			seq_name = ss.str().c_str();
+		if (found == 0){
+			std::cout << "no sequence with this id: " << seqId << std::endl ;
+			return; 
 		}
 	}
+	
+	size_t count = 0; 
 	std::list<DnaSequence>::iterator it;
 	for(it = dna_list.begin(); it != dna_list.end(); ++it){
-		if ( seq_name != NULL && it->m_id == seqId ){
-			DnaSequence temp(" ",seq_name);
-			temp = *it;
-			dna_list.push_back(temp);
-			std::cout << temp << std::endl;
-			return;
+		if ( it->m_seqName.find(seq_name,0) != std::string::npos ){
+			count+=1;		
 		}
 	}
-	std::cout << "no seq with this id: "<< seqId  << std::endl;*/
+	if (count > 0 ) {
+		std::stringstream ss;
+		ss << seq_name << "_" << count;
+		seq_name = ss.str().c_str();
+	}
+	int found = 0;
+	for(it = dna_list.begin(); it != dna_list.end(); ++it){
+		if ( it->m_id == seqId ){
+			found = 1;
+			DnaSequence temp(it->getSequence().c_str(),seq_name);
+			dna_list.push_back(temp); 
+			std::cout << temp << std::endl;
+			break;
+		}
+	}
+	if (found == 0){
+			std::cout << "no sequence with this id: " << seqId << std::endl ;
+			return; 
+	}
 }
 		
 void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
 	std::list<DnaSequence>::iterator it = dna_list.begin();
+	int found = 0 ;
 	for(it = dna_list.begin(); it != dna_list.end(); ++it){
 		if ( it->m_id == seqId ){
+			found = 1;
 			break;
 		}
 	}
-	std::stringstream ss;
-	ss << it->m_seqName << ".rawdna";
-	std::ofstream myfile(ss.str().c_str());
+	if (found == 0){
+		std::cout << "no sequence with this id: " << seqId << std::endl ;
+		return; 
+	}
+	
+	if (file_name == NULL){
+		std::stringstream ss;
+		ss << it->m_seqName << ".rawdna";
+		file_name = (char*)ss.str().c_str();
+	}
+		
+	std::ofstream myfile(file_name);
 	if (myfile.is_open())
 	{
 		myfile << *it;
@@ -97,6 +121,7 @@ void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
 	}
 	else 
 		throw "cant open file";
+	std::cout << "sequence with this id: " << seqId << " was written successfuly" << std::endl ;
 }
 
 

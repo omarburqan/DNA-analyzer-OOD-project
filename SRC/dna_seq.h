@@ -63,6 +63,8 @@ class DnaSequence{
 		
 		unsigned int m_id;
 		
+		std::string getSequence();
+		
 	private:
 	
 		NuclearTide** m_nuclear;

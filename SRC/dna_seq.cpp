@@ -3,6 +3,15 @@
 
 unsigned int DnaSequence::counter = 0;
 
+
+std::string DnaSequence::getSequence(){
+	std::stringstream os ;
+	for (size_t i=0 ; i < m_length ; i++ ){
+		os << m_nuclear[i]->get_char();
+	}
+	os << "\0";
+	return os.str();
+}
 // CTOR 
 DnaSequence::DnaSequence(const char* data,std::string name){
 	allocate_memory(data,strlen(data));

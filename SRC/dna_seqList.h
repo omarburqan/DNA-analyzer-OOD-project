@@ -19,7 +19,7 @@ class DnaSequenceList : public CommandLine {
 		
 		void saveSequence(size_t seqId,char* file_name = NULL) ;
 
-	private:
+
 			
 		std::list<DnaSequence> dna_list;
 		

@@ -29,8 +29,8 @@ class NuclearTide{
 
 
 inline NuclearTide::NuclearTide(const char& sub):m_nuc(sub){
-	if ( !check_data_validation(sub) )
-		throw BadInput();
+	//if ( !check_data_validation(sub) )
+		//throw BadInput();
 }
 
 inline NuclearTide::~NuclearTide(){ }
@@ -39,6 +39,7 @@ inline const char& NuclearTide::get_char() const { return m_nuc; }
 
 // helping method
 inline bool NuclearTide::check_data_validation(const char& dna) const {
+	std::cout << dna << std::endl;
 	for (size_t i = 0 ; i<consist.length() ; i++)
 	{
 		if( dna == consist[i] )
