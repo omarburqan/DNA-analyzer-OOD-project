@@ -2,7 +2,6 @@
 #define __NUCLEAR_TIDE_H__
 
 #include <iostream>
-#include <list>
 
 
 struct BadInput : public std::exception

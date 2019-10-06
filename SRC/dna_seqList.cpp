@@ -1,6 +1,4 @@
 #include "dna_seqList.h"
-#include "fstream"
-#include <string.h>
 
 unsigned int DnaSequenceList::default_name_counter = 0;
 
@@ -12,21 +10,21 @@ void DnaSequenceList::newSequence(const char* data,const char* seq_name){
 		seq_name = ss.str().c_str();
 	}
 	DnaSequence temp (data,seq_name);
-	dna_list.push_back(temp);
+	dna_list.push_back(temp); 
 	std::cout << temp << std::endl;
 }
 
 // cmd >>> load <file_name>  [@<sequence_name>]
-void DnaSequenceList::loadSequence(const char* file_name,const char* seq_name) {
+void DnaSequenceList::loadSequence( char* file_name,const char* seq_name) {
 	if (seq_name == NULL) {
-		seq_name = file_name;
+		seq_name = strtok (file_name,",");
 	}
 	
 	size_t count = 0; 
 	std::list<DnaSequence>::iterator it;
 	for(it = dna_list.begin(); it != dna_list.end(); ++it){
-		if ( it->m_seqName == seq_name ){
-			count++;		
+		if ( it->m_seqName.find(seq_name,0) != std::string::npos ){
+			count+=1;		
 		}
 	}
 	if (count > 0 ) {
@@ -47,9 +45,9 @@ void DnaSequenceList::loadSequence(const char* file_name,const char* seq_name) {
 	dna_list.push_back(temp);
 	std::cout << temp << std::endl;
 }
-		
+
 void DnaSequenceList::dupSequence(size_t seqId,const char* seq_name) {
-	if ( seq_name == NULL ) {
+	/*if ( seq_name == NULL ) {
 		size_t count = 0; 
 		std::list<DnaSequence>::iterator it;
 		for(it = dna_list.begin(); it != dna_list.end(); ++it){
@@ -78,9 +76,35 @@ void DnaSequenceList::dupSequence(size_t seqId,const char* seq_name) {
 			return;
 		}
 	}
-	std::cout << "no seq with this id: "<< seqId  << std::endl;
+	std::cout << "no seq with this id: "<< seqId  << std::endl;*/
 }
 		
-void DnaSequenceList::SaveSequence(size_t seqId,char* file_name) {
-	
+void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
+	std::list<DnaSequence>::iterator it = dna_list.begin();
+	for(it = dna_list.begin(); it != dna_list.end(); ++it){
+		if ( it->m_id == seqId ){
+			break;
+		}
+	}
+	std::stringstream ss;
+	ss << it->m_seqName << ".rawdna";
+	std::ofstream myfile(ss.str().c_str());
+	if (myfile.is_open())
+	{
+		myfile << *it;
+		myfile << std::endl;
+		myfile.close();
+	}
+	else 
+		throw "cant open file";
 }
+
+
+
+
+
+
+
+
+
+

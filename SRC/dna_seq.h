@@ -1,10 +1,12 @@
 #ifndef __DNA_SEQUENCE_H__
 #define __DNA_SEQUENCE_H__
 
-#include <iostream>
 #include "nuclear.h"
-#include <cstring>
+#include <string.h>
 #include <stdlib.h>
+#include <sstream> 
+#include <list>
+#include "fstream"
 
 class DnaSequence{
 
@@ -66,10 +68,6 @@ class DnaSequence{
 		NuclearTide** m_nuclear;
 		
 		size_t m_length;
-		
-
-		
-
 		
 		static unsigned int counter ;
 		

@@ -1,10 +1,10 @@
 #include <iostream>
-
 #include "dna_seqList.h"
 
 using std::cout;
 using std::endl;
 using std::cin;
+
 
 
 int main(){
@@ -16,6 +16,12 @@ int main(){
 	//getline(cin,input) ;
 	//cout << input << endl;
 	
+
+	
+  
+
+
+	
 	
 	DnaSequenceList list;
 	list.newSequence("ACGT",(char*)"omar");
@@ -24,14 +30,17 @@ int main(){
 	list.newSequence("ACGT");
 	
 	
-	list.loadSequence((char*)"dna.txt");
-
-	list.loadSequence((char*)"dna.txt");
-	list.loadSequence((char*)"dna.txt",(char*)"montaser");
+	list.loadSequence((char*)"dna.rawdna");
+	list.loadSequence((char*)"dna.rawdna");
+	list.loadSequence((char*)"dna.rawdna");
+	list.loadSequence((char*)"dna.rawdna");
+	list.loadSequence((char*)"dna.rawdna",(char*)"montaser");
 	
-	list.dupSequence(22);
-	list.dupSequence(22,(char*)"ibrahim");
-	
+	/*std::list<DnaSequence>::iterator it;
+	for(it = list.dna_list.begin(); it != list.dna_list.end(); ++it){
+		cout << *it  << endl;
+	}*/	
+	list.saveSequence(4);
 	
 	return 0;
 }

@@ -4,22 +4,25 @@
 #include <iostream>
 #include "cli.h"
 #include "dna_seq.h"
-#include <sstream> 
 
-class DnaSequenceList {
+
+
+class DnaSequenceList : public CommandLine {
 	
 	public:
 		
 		void newSequence(const char* data, const char* seq_name = NULL) ;
 		
-		void loadSequence(const char* file_name,const char* seq_name = NULL) ;
+		void loadSequence( char* file_name, const char* seq_name = NULL) ;
 		
 		void dupSequence(size_t seqId,const char* seq_name = NULL) ; 
 		
-		void SaveSequence(size_t seqId,char* file_name = NULL) ;
+		void saveSequence(size_t seqId,char* file_name = NULL) ;
+
+	private:
+			
+		std::list<DnaSequence> dna_list;
 		
-	
-		std::list<DnaSequence> dna_list ;
 		static unsigned int default_name_counter; 
 		
 };

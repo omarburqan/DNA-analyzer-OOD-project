@@ -1,29 +1,32 @@
 #include "dna_seq.h"
-#include "fstream"
+
 
 unsigned int DnaSequence::counter = 0;
 
 // CTOR 
 DnaSequence::DnaSequence(const char* data,std::string name){
 	allocate_memory(data,strlen(data));
-	m_id = ++counter;
+	m_id = (++counter);
 	m_seqName = name;
 }
 
 DnaSequence::DnaSequence(const std::string& data,std::string name){
 	allocate_memory(data.c_str(),data.length());
-	m_id = ++counter;
+	m_id = (++counter);
 	m_seqName = name;
 }
 
-DnaSequence::DnaSequence(const DnaSequence &other){ // copy CTOR 	
+DnaSequence::DnaSequence(const DnaSequence &other){ // copy CTOR 
+	
 	char* temp = new char[other.m_length]; 
 	for ( size_t i=0 ; i < other.m_length ; i++ ){ // copying other nuclear 
 		temp[i] = other.m_nuclear[i]->get_char();
 	}
 	allocate_memory(temp,other.m_length);
 	delete [] temp;
-	
+	m_id = other.m_id;
+	m_seqName = other.m_seqName;
+	//std::cout << *this << std::endl;
 }
 
 DnaSequence& DnaSequence::operator=(const DnaSequence& other){ // copy assingment 	
