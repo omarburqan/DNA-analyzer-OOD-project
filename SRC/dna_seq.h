@@ -13,10 +13,10 @@ class DnaSequence{
 	public:
 		
 		// CTOR  c-string
-		DnaSequence(const char * data,std::string name=NULL);
+		DnaSequence(const char * data);
 
 		// CTOR std::string 
-		DnaSequence(const std::string&,std::string name=NULL);
+		DnaSequence(const std::string&);
 
 		// Support construction and assignment from another DnaSequence.
 		DnaSequence(const DnaSequence &); // copy CTOR 
@@ -58,10 +58,6 @@ class DnaSequence{
 		std::list<int> findAllSub(DnaSequence*) const ;
 		
 		std::list<DnaSequence> FindConsensusSequences() const;
-		
-		std::string m_seqName;
-		
-		unsigned int m_id;
 		
 		std::string getSequence();
 		

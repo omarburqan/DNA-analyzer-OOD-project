@@ -2,29 +2,22 @@
 #define __DNA_SEQUENCE_LIST_H__
 
 #include <iostream>
-#include "cli.h"
 #include "dna_seq.h"
+#include <map>
 
 
-
-class DnaSequenceList : public CommandLine {
+class DnaSequenceList {
 	
 	public:
 		
-		void newSequence(const char* data, const char* seq_name = NULL) ;
-		
-		void loadSequence( char* file_name, const char* seq_name = NULL) ;
-		
-		void dupSequence(size_t seqId,const char* seq_name = NULL) ; 
-		
-		void saveSequence(size_t seqId,char* file_name = NULL) ;
-
-
-			
-		std::list<DnaSequence> dna_list;
-		
 		static unsigned int default_name_counter; 
+
+		static unsigned int m_dnaId;	
 		
+		static std::map<std::string,DnaSequence*> m_dnaData;
+		
+    	static std::map<std::string,std::string > m_idToName;
+    		
 };
 
 

@@ -2,18 +2,13 @@
 
 unsigned int DnaSequenceList::default_name_counter = 0;
 
+unsigned int DnaSequenceList::m_dnaId = 0;
 
-void DnaSequenceList::newSequence(const char* data,const char* seq_name){
-	if (seq_name == NULL){
-		std::stringstream ss;
-		ss << "seq" << (++default_name_counter);
-		seq_name = ss.str().c_str();
-	}
-	DnaSequence temp(data,seq_name);
-	dna_list.push_back(temp); 
-	std::cout << temp << std::endl;
-}
+std::map<std::string,DnaSequence*> DnaSequenceList::m_dnaData;
+		
+std::map<std::string,std::string > DnaSequenceList::m_idToName;
 
+/*
 // cmd >>> load <file_name>  [@<sequence_name>]
 void DnaSequenceList::loadSequence( char* file_name,const char* seq_name) {
 	if (seq_name == NULL) {
@@ -123,7 +118,7 @@ void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
 		throw "cant open file";
 	std::cout << "sequence with this id: " << seqId << " was written successfuly" << std::endl ;
 }
-
+*/
 
 
 

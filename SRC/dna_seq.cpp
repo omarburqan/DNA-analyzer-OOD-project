@@ -13,16 +13,12 @@ std::string DnaSequence::getSequence(){
 	return os.str();
 }
 // CTOR 
-DnaSequence::DnaSequence(const char* data,std::string name){
+DnaSequence::DnaSequence(const char* data){
 	allocate_memory(data,strlen(data));
-	m_id = (++counter);
-	m_seqName = name;
 }
 
-DnaSequence::DnaSequence(const std::string& data,std::string name){
+DnaSequence::DnaSequence(const std::string& data){
 	allocate_memory(data.c_str(),data.length());
-	m_id = (++counter);
-	m_seqName = name;
 }
 
 DnaSequence::DnaSequence(const DnaSequence &other){ // copy CTOR 
@@ -33,8 +29,6 @@ DnaSequence::DnaSequence(const DnaSequence &other){ // copy CTOR
 	}
 	allocate_memory(temp,other.m_length);
 	delete [] temp;
-	m_id = other.m_id;
-	m_seqName = other.m_seqName;
 	//std::cout << *this << std::endl;
 }
 
@@ -63,7 +57,6 @@ DnaSequence& DnaSequence::operator=(const std::string& newData){ // copy assignm
 }
 
 std::ostream& operator<<(std::ostream &os, const DnaSequence &dna){ // left-shift operator to std::ostream
-	os << "["<<dna.m_id <<"] " << dna.m_seqName << ": ";
 	for ( size_t i=0 ; i < dna.m_length ; i++ ){
 		os << dna.m_nuclear[i]->get_char();
 	}
