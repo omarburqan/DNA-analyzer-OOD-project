@@ -8,35 +8,43 @@
 class Command 
 {
 	public:
-		virtual void do_command(std::vector<std::string>& temp ) = 0;
+	
+		virtual std::string do_command(std::vector<std::string>& temp ) = 0;
+		
+	protected: // helping methods 
+	
+		unsigned int getHowMany(std::string name);
+		
+		std::string createDna(std::string line,std::string seq_name);
 };
 
 class newCommand:public Command
 {
 	public:
-		void do_command(std::vector<std::string>& temp );
+		std::string do_command(std::vector<std::string>& temp );
 };
 class loadCommand:public Command
 {
 	public:
-		void do_command(std::vector<std::string>& temp );
+		std::string do_command(std::vector<std::string>& temp );
 };
 class dupCommand:public Command
 {
 	public:
-		void do_command(std::vector<std::string>& temp );
+		std::string do_command(std::vector<std::string>& temp );
 };
 class saveCommand:public Command
 {
 	public:
-		void do_command(std::vector<std::string>& temp );
+		std::string do_command(std::vector<std::string>& temp );
 };
 
 /**********************************/
 
-class CommandFactory {
-public:
-    Command * getCommand(std::string& commandName);
+class CommandFactory 
+{
+	public:
+    	Command * getCommand(std::string& commandName);
 };
 
 /*********************************/

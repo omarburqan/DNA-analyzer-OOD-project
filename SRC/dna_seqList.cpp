@@ -9,38 +9,6 @@ std::map<std::string,DnaSequence*> DnaSequenceList::m_dnaData;
 std::map<std::string,std::string > DnaSequenceList::m_idToName;
 
 /*
-// cmd >>> load <file_name>  [@<sequence_name>]
-void DnaSequenceList::loadSequence( char* file_name,const char* seq_name) {
-	if (seq_name == NULL) {
-		seq_name = strtok (file_name,",");
-	}
-	
-	size_t count = 0; 
-	std::list<DnaSequence>::iterator it;
-	for(it = dna_list.begin(); it != dna_list.end(); ++it){
-		if ( it->m_seqName.find(seq_name,0) != std::string::npos ){
-			count+=1;		
-		}
-	}
-	if (count > 0 ) {
-		std::stringstream ss;
-		ss << seq_name << count;
-		seq_name = ss.str().c_str();
-	}
-	
-	std::string line;
-	std::ifstream myfile (file_name);
-	if (myfile.is_open())
-	{
-		myfile >> line ;
-	}
-	else
-		throw "cant open file";
-	DnaSequence temp (line.c_str(),seq_name);
-	dna_list.push_back(temp); 
-	std::cout << temp << std::endl;
-}
-
 void DnaSequenceList::dupSequence(size_t seqId,const char* seq_name) {
 	
 	if (NULL == seq_name){
