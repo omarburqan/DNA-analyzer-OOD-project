@@ -14,7 +14,7 @@ class Command
 	protected: // helping methods 
 	
 		unsigned int getHowMany(std::string name);
-		
+		std::string getKey(std::string );
 		std::string createDna(std::string line,std::string seq_name);
 };
 
