@@ -168,7 +168,7 @@ long DnaSequence::findSub(DnaSequence* other)const{
     return -1;
 }
 
-size_t DnaSequence::countOccurrences(DnaSequence* other)const{
+size_t DnaSequence::countOccurrences(DnaSequence* other) const{
 	return findAllSub(other).size();
 }
 

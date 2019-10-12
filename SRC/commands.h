@@ -20,6 +20,8 @@ class Command
 		std::string getKey(std::string );
 };
 
+/****************Creation Commands******************/
+
 class newCommand:public Command
 {
 	public:
@@ -35,7 +37,25 @@ class dupCommand:public Command
 	public:
 		std::string do_command(std::vector<std::string>& temp );
 };
-class saveCommand:public Command
+
+/*****************Analysis Commands*****************/
+
+class lenCommand:public Command
+{
+	public:
+		std::string do_command(std::vector<std::string>& temp );
+};
+class findCommand:public Command
+{
+	public:
+		std::string do_command(std::vector<std::string>& temp );
+};
+class countCommand:public Command
+{
+	public:
+		std::string do_command(std::vector<std::string>& temp );
+};
+class findallCommand:public Command
 {
 	public:
 		std::string do_command(std::vector<std::string>& temp );

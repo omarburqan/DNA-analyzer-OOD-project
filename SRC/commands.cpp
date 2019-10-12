@@ -48,14 +48,20 @@ std::string Command::getKey(std::string name){
 //===========================================================================
 
 Command * CommandFactory::getCommand(std::string& commandName) {
-    if(commandName == "new")
-        return new newCommand();
-    if (commandName == "load")
-        return new loadCommand();
-    if (commandName == "dup")
-        return new dupCommand();
-    /*if (commandName == "save")
-        return new saveCommand();*/
+    if (commandName == "new"){
+        return new newCommand();}
+    if (commandName == "load"){
+        return new loadCommand();}
+    if (commandName == "dup"){
+        return new dupCommand();}
+    if (commandName == "len"){
+    	return new lenCommand();}
+	if (commandName == "find"){
+    	return new findCommand();}
+	if (commandName == "count"){
+    	return new countCommand();}
+	if (commandName == "findall"){
+    	return new findallCommand();}
     return 0;
 }
 
@@ -81,7 +87,9 @@ std::string newCommand::do_command(std::vector<std::string> &temp) {
 std::string loadCommand::do_command(std::vector<std::string> &temp) {
 	std::stringstream seq_name;
     if (temp.size() == 2){	
-    	seq_name << temp.at(1);
+    	size_t i = 0;
+    	while (temp.at(1)[i] != '.')
+    		seq_name << temp.at(1)[i++];
 	}
 	if (temp.size() == 3){
 		unsigned int counter = getHowMany(temp.at(2));
@@ -138,3 +146,92 @@ std::string dupCommand::do_command(std::vector<std::string> &temp) {
 }
 
 //===========================================================================
+
+std::string lenCommand::do_command(std::vector<std::string> &temp) {
+	std::string key;
+	std::stringstream result;
+	key = getKey(temp.at(1));
+	if (key == "wrong input")
+		return "wrong input";	
+	result << (DnaSequenceList::getInstance()->m_dnaData[key])->sequenceLength() ;
+	return result.str();
+}
+
+//===========================================================================
+
+std::string findCommand::do_command(std::vector<std::string> &temp) {
+	std::string key1,key2;
+	std::stringstream result;
+	key1 = getKey(temp.at(1));
+	if (key1 == "wrong input")
+		return "wrong input";
+	key2 = getKey(temp.at(2));
+	if (key2 == "wrong input"){
+		DnaSequence temp_seq(temp.at(2));
+		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->findSub(&temp_seq);
+	}
+	else{
+		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->findSub(DnaSequenceList::getInstance()->m_dnaData[key2]);
+	}
+	return result.str();	
+}
+
+//===========================================================================
+
+std::string countCommand::do_command(std::vector<std::string> &temp) {
+	std::string key1,key2;
+	std::stringstream result;
+	key1 = getKey(temp.at(1));
+	if (key1 == "wrong input")
+		return "wrong input";
+	key2 = getKey(temp.at(2));
+	if (key2 == "wrong input"){
+		DnaSequence temp_seq(temp.at(2));
+		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->countOccurrences(&temp_seq);
+	}
+	else{
+		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->countOccurrences(DnaSequenceList::getInstance()->m_dnaData[key2]);
+	}
+	return result.str();
+}
+
+//===========================================================================
+
+std::string findallCommand::do_command(std::vector<std::string> &temp) {
+	std::string key1,key2;
+	std::stringstream result;
+	std::list<int> final_result;
+	key1 = getKey(temp.at(1));
+	if (key1 == "wrong input")
+		return "wrong input";
+	key2 = getKey(temp.at(2));
+	if (key2 == "wrong input"){
+		DnaSequence temp_seq(temp.at(2));
+		final_result = (DnaSequenceList::getInstance()->m_dnaData[key1])->findAllSub(&temp_seq);
+	}
+	else{
+		final_result = (DnaSequenceList::getInstance()->m_dnaData[key1])->findAllSub(DnaSequenceList::getInstance()->m_dnaData[key2]);
+	}
+	std::list<int>::iterator it;
+	for (it = final_result.begin(); it != final_result.end(); ++it){
+		result << *it;
+	}
+	return result.str();	
+}
+
+//===========================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
