@@ -4,8 +4,8 @@
 
 unsigned int Command::getHowMany(std::string name){
 	unsigned int counter = 0;
-	for(std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::m_dnaData.begin();
-													 it != DnaSequenceList::m_dnaData.end(); ++it) 
+	for(std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::getInstance()->m_dnaData.begin();
+													 it != DnaSequenceList::getInstance()->m_dnaData.end(); ++it) 
 	{
 		if(it->first.find(name,0) != std::string::npos){
 			counter +=1;
@@ -16,10 +16,10 @@ unsigned int Command::getHowMany(std::string name){
 
 std::string Command::createDna(std::string line,std::string seq_name){
 	DnaSequence res(line);	
-	DnaSequenceList::m_dnaData[seq_name] = &res;
+	DnaSequenceList::getInstance()->m_dnaData[seq_name] = &res;
 	std::stringstream id;
-	id << ++DnaSequenceList::m_dnaId;
-	DnaSequenceList::m_idToName[id.str()] = seq_name;
+	id << ++DnaSequenceList::getInstance()->m_dnaId;
+	DnaSequenceList::getInstance()->m_idToName[id.str()] = seq_name;
 	std::stringstream result ;
 	result << "[" << id.str() << "] " << seq_name << ": " << res;
 	return result.str();
@@ -41,7 +41,7 @@ std::string Command::getKey(std::string name){
 		key += name[i++] ;
 	}
 	if(isName == 0) // in case of #id 
-		key = DnaSequenceList::m_idToName[key];
+		key = DnaSequenceList::getInstance()->m_idToName[key];
 	return key;
 
 }
@@ -64,7 +64,7 @@ Command * CommandFactory::getCommand(std::string& commandName) {
 std::string newCommand::do_command(std::vector<std::string> &temp) {
 	std::stringstream seq_name;
     if (temp.size() == 2){
-		seq_name << "SeqDefaultName" << ++DnaSequenceList::default_name_counter;
+		seq_name << "SeqDefaultName" << ++DnaSequenceList::getInstance()->default_name_counter;
 	}
 	if (temp.size() == 3){
 		unsigned int counter = getHowMany(temp.at(2));
@@ -127,8 +127,8 @@ std::string dupCommand::do_command(std::vector<std::string> &temp) {
 			seq_name << temp.at(2);
 	}
 	
-	for(std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::m_dnaData.begin();
-														 it != DnaSequenceList::m_dnaData.end(); ++it) 
+	for(std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::getInstance()->m_dnaData.begin();
+														 it != DnaSequenceList::getInstance()->m_dnaData.end(); ++it) 
 	{
 		if(it->first == key){
 			seq_data << it->second ;

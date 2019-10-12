@@ -9,15 +9,23 @@
 class DnaSequenceList {
 	
 	public:
-		
-		static unsigned int default_name_counter; 
+    	
+    	static DnaSequenceList* getInstance();
+     	
+     	unsigned int default_name_counter; 
 
-		static unsigned int m_dnaId;	
+		unsigned int m_dnaId;	
 		
-		static std::map<std::string,DnaSequence*> m_dnaData;
+		std::map<std::string,DnaSequence*> m_dnaData;
 		
-    	static std::map<std::string,std::string > m_idToName;
-    		
+    	std::map<std::string,std::string > m_idToName;
+    	
+	private:
+	
+		DnaSequenceList();
+		
+		static DnaSequenceList* obj;
+			
 };
 
 

@@ -1,12 +1,18 @@
 #include "dna_seqList.h"
 
-unsigned int DnaSequenceList::default_name_counter = 0;
+DnaSequenceList* DnaSequenceList::obj = NULL;
 
-unsigned int DnaSequenceList::m_dnaId = 0;
+DnaSequenceList::DnaSequenceList(){ 
+	default_name_counter = 0 ;
+	m_dnaId = 0 ;
+}
 
-std::map<std::string,DnaSequence*> DnaSequenceList::m_dnaData;
-		
-std::map<std::string,std::string > DnaSequenceList::m_idToName;
+DnaSequenceList* DnaSequenceList::getInstance(){ 
+	if ( !obj ) 
+	    obj = new DnaSequenceList(); 
+    return obj; 
+}
+
 
 /*		
 void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
