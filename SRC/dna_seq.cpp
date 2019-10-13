@@ -61,7 +61,6 @@ std::ostream& operator<<(std::ostream &os, const DnaSequence &dna){ // left-shif
 		os << dna.m_nuclear[i]->get_char();
 	}
 	os << std::endl;
-
 	return os;
 }
 
@@ -151,19 +150,21 @@ DnaSequence** DnaSequence::getPairedStrand() const {
 }
 
 long DnaSequence::findSub(DnaSequence* other)const{
+	
 	if ( other->m_length > m_length )
 		return -1;
-		
+	
 	size_t i;
     for (i = 0 ; i <= (m_length)-(other->m_length); ++i)
     {
     	size_t j;
-        for ( j = 0; j < (other->m_length) ; ++j)
+        for ( j = 0; j < (other->m_length) ; ++j){
             if ( m_nuclear[i + j]->get_char() != other->m_nuclear[j]->get_char() )
                 break;
+        }
+        if (j == other->m_length){
 
-        if (j == other->m_length)
-            return (int)(i+1);
+            return (long)(i+1);}
     }
     return -1;
 }
@@ -173,6 +174,8 @@ size_t DnaSequence::countOccurrences(DnaSequence* other) const{
 }
 
 std::list<int> DnaSequence::findAllSub(DnaSequence* other) const {
+	
+
 	if ( other->m_length > m_length )
 		return std::list<int>();
  
@@ -231,7 +234,7 @@ void DnaSequence::allocate_memory(const char* data,size_t length){
 	m_length = length;
 }
 void DnaSequence::freeNuclear(){
-	for (size_t i=0 ; i < m_length ;i++){
+	for (size_t i= 0 ; i < m_length ;i++){
 		delete m_nuclear[i];
 	}
 	delete [] m_nuclear;

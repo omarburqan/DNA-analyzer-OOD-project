@@ -7,13 +7,13 @@ using std::cout;
 using std::endl;
 using std::cin;
 
-std::vector<std::string>* split_data(const std::string &str, char delim = ' ')
+std::vector<std::string> split_data(const std::string &str)
 {
-	std::vector<std::string>* cont = new std::vector<std::string>();
+	std::vector<std::string> cont;
     std::stringstream ss(str);
     std::string token;
-    while (std::getline(ss, token, delim)) {
-            cont->push_back(token);
+    while (std::getline(ss, token, ' ')) {
+            cont.push_back(token);
     }
     return cont;
 }
@@ -22,28 +22,26 @@ void printResult(std::string result){
 }
 
 int main(){
-
- 	while(1){
+	while(1){
 		std::cout << "cmd >>> ";
 		std::string input;
      	getline(cin, input);
-		std::vector<std::string> *keywords = split_data(input, ' ');
-		if (keywords->front() == "quit")
+		std::vector<std::string> keywords = split_data(input);
+		if (keywords.front() == "quit"){
 			break;
-		if (keywords->size() < 2){
-			return -1;
-		} 
-	    CommandFactory factory;
-		Command * command = factory.getCommand(keywords->front());
-		if(command != 0){
-		    printResult(command->do_command(*keywords));
 		}
-		keywords->clear();
-		delete keywords;
-    }
-
-	
-		
+		if (keywords.size() < 2){
+			printResult("wrong input");			
+			continue;
+		}	
+	    CommandFactory factory;
+		Command* command = factory.getCommand(keywords);
+		if(command == 0){
+			printResult("wrong input");
+		    return -1;
+		}
+	    printResult(command->do_command());
+	}	
 	return 0;
 }
 

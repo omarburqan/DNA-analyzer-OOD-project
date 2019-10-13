@@ -13,46 +13,46 @@ DnaSequenceList* DnaSequenceList::getInstance(){
     return obj; 
 }
 
-
-/*		
-void DnaSequenceList::saveSequence(size_t seqId,char* file_name) {
-	std::list<DnaSequence>::iterator it = dna_list.begin();
-	int found = 0 ;
-	for(it = dna_list.begin(); it != dna_list.end(); ++it){
-		if ( it->m_id == seqId ){
-			found = 1;
-			break;
+unsigned int DnaSequenceList::getHowMany(std::string name){
+	unsigned int counter = 0;
+	for(std::map<std::string,DnaSequence*>::iterator it = m_dnaData.begin();
+													 it != m_dnaData.end(); ++it) 
+	{
+		if(it->first.find(name,0) != std::string::npos){
+			counter +=1;
 		}
 	}
-	if (found == 0){
-		std::cout << "no sequence with this id: " << seqId << std::endl ;
-		return; 
-	}
-	
-	if (file_name == NULL){
-		std::stringstream ss;
-		ss << it->m_seqName << ".rawdna";
-		file_name = (char*)ss.str().c_str();
-	}
-		
-	std::ofstream myfile(file_name);
-	if (myfile.is_open())
-	{
-		myfile << *it;
-		myfile << std::endl;
-		myfile.close();
-	}
-	else 
-		throw "cant open file";
-	std::cout << "sequence with this id: " << seqId << " was written successfuly" << std::endl ;
+	return counter;
 }
-*/
 
+std::string DnaSequenceList::createDna(std::string line,std::string seq_name){
+	DnaSequence res(line);	
+	m_dnaData[seq_name] = &res;
+	std::stringstream id;
+	id << ++m_dnaId;
+	m_idToName[id.str()] = seq_name;
+	std::stringstream result ;
+	result << "[" << id.str() << "] " << seq_name << ": " << *(m_dnaData[seq_name]);
+	return result.str();
+}
+std::string DnaSequenceList::getKey(std::string name){
+	int isName;
+	std::string key;
+	if(name[0] == '#'){
+		isName = 0;
+	}
+	else if (name[0] == '@'){
+		isName = 1; 
+	}
+	else{
+		return "wrong input";
+	}
+	size_t i = 1 ;
+	while ( i < name.length() ){
+		key += name[i++] ;
+	}
+	if(isName == 0 ) // in case of #id 
+		key = m_idToName[key];
+	return key;
 
-
-
-
-
-
-
-
+}

@@ -8,16 +8,7 @@
 class Command 
 {
 	public:
-	
-		virtual std::string do_command(std::vector<std::string>& temp ) = 0;
-		
-	protected: // helping methods 
-	
-		unsigned int getHowMany(std::string name);
-
-		std::string createDna(std::string line,std::string seq_name);
-		
-		std::string getKey(std::string );
+		virtual std::string do_command() = 0;	
 };
 
 /****************Creation Commands******************/
@@ -25,17 +16,27 @@ class Command
 class newCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		newCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
+
 class loadCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		loadCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 class dupCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		dupCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 
 /*****************Analysis Commands*****************/
@@ -43,22 +44,34 @@ class dupCommand:public Command
 class lenCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		lenCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 class findCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		findCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 class countCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		countCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 class findallCommand:public Command
 {
 	public:
-		std::string do_command(std::vector<std::string>& temp );
+		findallCommand(std::vector<std::string>& temp);
+		std::string do_command();
+	private:
+		std::vector<std::string>& temp;
 };
 
 /**********************************/
@@ -66,7 +79,7 @@ class findallCommand:public Command
 class CommandFactory 
 {
 	public:
-    	Command * getCommand(std::string& commandName);
+    	Command * getCommand(std::vector<std::string>& temp);
 };
 
 /*********************************/

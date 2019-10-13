@@ -4,13 +4,14 @@
 #include <iostream>
 #include "dna_seq.h"
 #include <map>
-
+#include <vector>
 
 class DnaSequenceList {
 	
 	public:
     	
     	static DnaSequenceList* getInstance();
+    	~DnaSequenceList(){delete[] obj;}
      	
      	unsigned int default_name_counter; 
 
@@ -20,6 +21,14 @@ class DnaSequenceList {
 		
     	std::map<std::string,std::string > m_idToName;
     	
+        // helping methods 
+	
+		unsigned int getHowMany(std::string name);
+
+		std::string createDna(std::string line,std::string seq_name);
+		
+		std::string getKey(std::string );
+    	
 	private:
 	
 		DnaSequenceList();
@@ -27,9 +36,4 @@ class DnaSequenceList {
 		static DnaSequenceList* obj;
 			
 };
-
-
 #endif /* __DNA_SEQUENCE_LIST_H__ */
-
-
-
