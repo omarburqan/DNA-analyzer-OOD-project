@@ -40,8 +40,8 @@ int main(){
 			printResult("wrong input");
 		    return -1;
 		}
-	    printResult(command->do_command());
-	}	
+		printResult(command->do_command());	    
+	}
 	return 0;
 }
 

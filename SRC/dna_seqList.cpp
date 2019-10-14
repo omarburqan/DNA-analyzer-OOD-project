@@ -26,8 +26,8 @@ unsigned int DnaSequenceList::getHowMany(std::string name){
 }
 
 std::string DnaSequenceList::createDna(std::string line,std::string seq_name){
-	DnaSequence res(line);	
-	m_dnaData[seq_name] = &res;
+	DnaSequence* res = new DnaSequence(line);	
+	m_dnaData[seq_name] = res;
 	std::stringstream id;
 	id << ++m_dnaId;
 	m_idToName[id.str()] = seq_name;

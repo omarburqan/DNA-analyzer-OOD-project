@@ -93,7 +93,7 @@ std::string dupCommand::do_command() {
 														 it != DnaSequenceList::getInstance()->m_dnaData.end(); ++it) 
 	{
 		if(it->first == key){
-			seq_data << it->second ;
+			seq_data << *it->second ;
 		}
 	}
 	return DnaSequenceList::getInstance()->createDna(seq_data.str(),seq_name.str());
@@ -126,10 +126,10 @@ std::string findCommand::do_command() {
 	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
 	if (key2 == "wrong input"){
 		DnaSequence temp_seq(temp.at(2));
-		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->findSub(&temp_seq);
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(&temp_seq);
 	}
 	else{
-		result << (((DnaSequenceList::getInstance())->m_dnaData[key1]))->findSub(((DnaSequenceList::getInstance())->m_dnaData[key1]));
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(((DnaSequenceList::getInstance())->m_dnaData[key2]));
 	}
 	return result.str();	
 }
@@ -147,10 +147,10 @@ std::string countCommand::do_command() {
 	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
 	if (key2 == "wrong input"){
 		DnaSequence temp_seq(temp.at(2));
-		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->countOccurrences(&temp_seq);
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->countOccurrences(&temp_seq);
 	}
 	else{
-		result << (DnaSequenceList::getInstance()->m_dnaData[key1])->countOccurrences(DnaSequenceList::getInstance()->m_dnaData[key2]);
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->countOccurrences(((DnaSequenceList::getInstance())->m_dnaData[key2]));
 	}
 	return result.str();
 }
@@ -169,14 +169,15 @@ std::string findallCommand::do_command() {
 	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
 	if (key2 == "wrong input"){
 		DnaSequence temp_seq(temp.at(2));
-		final_result = (DnaSequenceList::getInstance()->m_dnaData[key1])->findAllSub(&temp_seq);
+		final_result = ((DnaSequenceList::getInstance())->m_dnaData[key1])->findAllSub(&temp_seq);
 	}
 	else{
-		final_result = (DnaSequenceList::getInstance()->m_dnaData[key1])->findAllSub(DnaSequenceList::getInstance()->m_dnaData[key2]);
+		final_result = ((DnaSequenceList::getInstance())->m_dnaData[key1])->findAllSub(((DnaSequenceList::getInstance())->m_dnaData[key2]));
 	}
 	std::list<int>::iterator it;
 	for (it = final_result.begin(); it != final_result.end(); ++it){
-		result << *it;
+
+		result << *it << " ";
 	}
 	return result.str();	
 }

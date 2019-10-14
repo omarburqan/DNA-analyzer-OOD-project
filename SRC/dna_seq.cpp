@@ -35,7 +35,6 @@ DnaSequence::DnaSequence(const DnaSequence &other){ // copy CTOR
 DnaSequence& DnaSequence::operator=(const DnaSequence& other){ // copy assingment 	
 	if ( this == &other || other.m_length == 0 )
 		return *this;
-		
 	freeNuclear();
 	char* temp = new char[other.m_length]; 
 	for ( size_t i=0 ; i < other.m_length ; i++ ){ // copying other nuclear 
@@ -150,10 +149,8 @@ DnaSequence** DnaSequence::getPairedStrand() const {
 }
 
 long DnaSequence::findSub(DnaSequence* other)const{
-	
 	if ( other->m_length > m_length )
 		return -1;
-	
 	size_t i;
     for (i = 0 ; i <= (m_length)-(other->m_length); ++i)
     {
