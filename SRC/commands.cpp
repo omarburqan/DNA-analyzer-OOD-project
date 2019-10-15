@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "obersver.cpp"
 
 //===========================================================================
 
@@ -118,20 +119,11 @@ std::string lenCommand::do_command() {
 findCommand::findCommand(std::vector<std::string>& temp):temp(temp){}
 
 std::string findCommand::do_command() {
-	std::string key1,key2;
-	std::stringstream result;
-	key1 = DnaSequenceList::getInstance()->getKey(temp.at(1));
-	if (key1 == "wrong input")
-		return "wrong input";
-	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
-	if (key2 == "wrong input"){
-		DnaSequence temp_seq(temp.at(2));
-		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(&temp_seq);
-	}
-	else{
-		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(((DnaSequenceList::getInstance())->m_dnaData[key2]));
-	}
-	return result.str();	
+    Subject s;
+    ConcreateObserver c(temp);
+    s.RegisterObserver(&c);
+    s.Execute();
+    return "";
 }
 
 //===========================================================================
@@ -178,6 +170,9 @@ std::string findallCommand::do_command() {
 	for (it = final_result.begin(); it != final_result.end(); ++it){
 
 		result << *it << " ";
+	}
+	if (final_result.size()==0){
+		return "-1";
 	}
 	return result.str();	
 }

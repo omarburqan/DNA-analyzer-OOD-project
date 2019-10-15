@@ -149,6 +149,7 @@ DnaSequence** DnaSequence::getPairedStrand() const {
 }
 
 long DnaSequence::findSub(DnaSequence* other)const{
+
 	if ( other->m_length > m_length )
 		return -1;
 	size_t i;

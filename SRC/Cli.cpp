@@ -18,7 +18,8 @@ std::vector<std::string> split_data(const std::string &str)
     return cont;
 }
 void printResult(std::string result){
-	std::cout << result << std::endl;
+	if(!result.empty())
+		std::cout << result << std::endl;
 }
 
 int main(){
@@ -41,7 +42,12 @@ int main(){
 		    return -1;
 		}
 		printResult(command->do_command());	    
-	}
+	}	
+
+    /*std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::getInstance()->m_dnaData.begin();
+	for ( ; it != DnaSequenceList::getInstance()->m_dnaData.end(); ++it){
+		std::cout << "inside   " << *it->second << std::endl;
+	}*/
 	return 0;
 }
 
