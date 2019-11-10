@@ -51,8 +51,13 @@ std::string DnaSequenceList::getKey(std::string name){
 	while ( i < name.length() ){
 		key += name[i++] ;
 	}
-	if(isName == 0 ) // in case of #id 
-		key = m_idToName[key];
+
+	if(isName == 0){ // in case of #id 
+		if (m_idToName.find( key ) != m_idToName.end() )
+			key = m_idToName[key];
+		else
+			return "wrong input doesnt not exist";
+	}
 	return key;
 
 }
