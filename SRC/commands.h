@@ -5,78 +5,78 @@
 #include<iostream>
 #include"dna_seqList.h"
 
+
+
+
 class Command 
 {
 	public:
 		virtual std::string do_command() = 0;
 		virtual ~Command();
 };
+/***************Abstract class*********************/
+
+class AbstractCommand:public Command
+{
+	public:
+		AbstractCommand(std::vector<std::string>& commandLine);
+	protected:
+		std::vector<std::string>& commandLine;
+};
 
 /****************Creation Commands******************/
 
-class newCommand:public Command
+class newCommand:public AbstractCommand
 {
 	public:
 		newCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
+	
 };
 
-class loadCommand:public Command
+class loadCommand:public AbstractCommand
 {
 	public:
 		loadCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
+
 };
 
-class dupCommand:public Command
+class dupCommand:public AbstractCommand
 {
 	public:
 		dupCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
 };
 
 /*****************Analysis Commands*****************/
 
-class lenCommand:public Command
+class lenCommand:public AbstractCommand
 {
 	public:
 		lenCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
 };
 
-class findCommand:public Command
+class findCommand:public AbstractCommand
 {
 	public:
 		findCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
 };
 
-class countCommand:public Command
+class countCommand:public AbstractCommand
 {
 	public:
 		countCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
 };
 
-class findallCommand:public Command
+class findallCommand:public AbstractCommand
 {
 	public:
 		findallCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
-	private:
-		std::vector<std::string>& commandLine;
 };
 
 /**********************************/

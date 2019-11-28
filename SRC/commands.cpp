@@ -3,9 +3,12 @@
 Command::~Command(){}
 //===========================================================================
 
-newCommand::newCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+AbstractCommand::AbstractCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
-// cmd >>> new <sequence> [@<sequence_name>]
+//===========================================================================
+
+newCommand::newCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
+
 std::string newCommand::do_command() { 
 	std::stringstream seq_name;
     if (commandLine.size() == 2){ 
@@ -30,7 +33,7 @@ std::string newCommand::do_command() {
 
 //===========================================================================
 
-loadCommand::loadCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+loadCommand::loadCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string loadCommand::do_command() {
 	std::stringstream seq_name;
@@ -66,7 +69,7 @@ std::string loadCommand::do_command() {
 
 //===========================================================================
 
-dupCommand::dupCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+dupCommand::dupCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string dupCommand::do_command() {
 	std::stringstream seq_name;
@@ -106,7 +109,7 @@ std::string dupCommand::do_command() {
 
 //===========================================================================
 
-lenCommand::lenCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+lenCommand::lenCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string lenCommand::do_command() {
 	std::string key;
@@ -124,7 +127,7 @@ std::string lenCommand::do_command() {
 
 //===========================================================================
 
-findCommand::findCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+findCommand::findCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string findCommand::do_command() {
     std::string key1,key2;
@@ -152,7 +155,7 @@ std::string findCommand::do_command() {
 
 //===========================================================================
 
-countCommand::countCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+countCommand::countCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string countCommand::do_command() {
 	std::string key1,key2;
@@ -180,7 +183,7 @@ std::string countCommand::do_command() {
 
 //===========================================================================
 
-findallCommand::findallCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
+findallCommand::findallCommand(std::vector<std::string>& commandLine):AbstractCommand(commandLine){}
 
 std::string findallCommand::do_command() {
 	std::string key1,key2;
