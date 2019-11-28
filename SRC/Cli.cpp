@@ -1,7 +1,9 @@
 #include <iostream>
+#include "vector"
 #include "dna_seqList.h"
 #include "commands.h"
-#include "vector"
+#include "factory.h"
+
 
 using std::cout;
 using std::endl;

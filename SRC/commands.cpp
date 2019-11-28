@@ -1,51 +1,22 @@
 #include "commands.h"
 
-
 //===========================================================================
 
-Command* CommandFactory::getCommand(std::vector<std::string>& commandName) {
-    if (commandName.at(0) == "new"){
-        return new newCommand(commandName);
-    }
-    if (commandName.at(0) == "load"){
-        return new loadCommand(commandName);
-    }
-    if (commandName.at(0) == "dup"){
-        return new dupCommand(commandName);
-    }
-    if (commandName.at(0) == "len"){
-    	return new lenCommand(commandName);
-	}
-	if (commandName.at(0) == "find"){
-    	return new findCommand(commandName);
-	}
-	if (commandName.at(0) == "count"){
-    	return new countCommand(commandName);
-	}
-	if (commandName.at(0) == "findall"){
-    	return new findallCommand(commandName);
-	}
-    	
-    return 0;
-}
-
-//===========================================================================
-
-newCommand::newCommand(std::vector<std::string>& temp):temp(temp){}
+newCommand::newCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string newCommand::do_command() {
 	std::stringstream seq_name;
-    if (temp.size() == 2){
+    if (commandLine.size() == 2){
 		seq_name << "SeqDefaultName" << ++DnaSequenceList::getInstance()->default_name_counter;
 	}
-	if (temp.size() == 3){
-		if (temp.at(2)[0] != '@' || temp.at(2).length() == 1){
+	if (commandLine.size() == 3){
+		if (commandLine.at(2)[0] != '@' || commandLine.at(2).length() == 1){
 			return "wrong input";
 		}
 		std::stringstream parsed_name;
 		size_t i = 1;
-		while(i < temp.at(2).length() )
-			parsed_name << temp.at(2)[i++];
+		while(i < commandLine.at(2).length() )
+			parsed_name << commandLine.at(2)[i++];
 		 
 		unsigned int counter = DnaSequenceList::getInstance()->getHowMany(parsed_name.str());
 		if ( counter > 0 )
@@ -53,36 +24,36 @@ std::string newCommand::do_command() {
 		else
 			seq_name << parsed_name.str();
 	}
-	return DnaSequenceList::getInstance()->createDna(temp.at(1),seq_name.str());
+	return DnaSequenceList::getInstance()->createDna(commandLine.at(1),seq_name.str());
 }
 
 //===========================================================================
 
-loadCommand::loadCommand(std::vector<std::string>& temp):temp(temp){}
+loadCommand::loadCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string loadCommand::do_command() {
 	std::stringstream seq_name;
-    if (temp.size() == 2){	
+    if (commandLine.size() == 2){	
     	size_t i = 0;
-    	while (temp.at(1)[i] != '.')
-    		seq_name << temp.at(1)[i++];
+    	while (commandLine.at(1)[i] != '.')
+    		seq_name << commandLine.at(1)[i++];
 	}
-	if (temp.size() == 3){
-		if (temp.at(2)[0] != '@' || temp.at(2).length() == 1){
+	if (commandLine.size() == 3){
+		if (commandLine.at(2)[0] != '@' || commandLine.at(2).length() == 1){
 			return "wrong input";
 		}
 		std::stringstream parsed_name;
 		size_t i = 1;
-		while(i < temp.at(2).length() )
-			parsed_name << temp.at(2)[i++];
-		temp.at(2) = parsed_name.str();
-		seq_name << temp.at(2);
+		while(i < commandLine.at(2).length() )
+			parsed_name << commandLine.at(2)[i++];
+		commandLine.at(2) = parsed_name.str();
+		seq_name << commandLine.at(2);
 	}
 	unsigned int counter = DnaSequenceList::getInstance()->getHowMany(seq_name.str());
 	if ( counter > 0 )
 		seq_name << counter;
 	std::string line;
-	std::ifstream myfile((char*)temp.at(1).c_str());
+	std::ifstream myfile((char*)commandLine.at(1).c_str());
 	if (myfile.is_open())
 	{
 		myfile >> line ;
@@ -94,29 +65,29 @@ std::string loadCommand::do_command() {
 
 //===========================================================================
 
-dupCommand::dupCommand(std::vector<std::string>& temp):temp(temp){}
+dupCommand::dupCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string dupCommand::do_command() {
 	std::stringstream seq_name;
 	std::stringstream seq_data;
 	std::string key;
 	
-	key = DnaSequenceList::getInstance()->getKey(temp.at(1));
+	key = DnaSequenceList::getInstance()->getKey(commandLine.at(1));
 	if (key == "wrong input" || key == "wrong input key doesnt not exist")
 		return key;	
-    if (temp.size() == 2){	// name was not provided 		
+    if (commandLine.size() == 2){	// name was not provided 		
 		seq_name << key;	
 	}
 	
-	else if ( temp.size() == 3 ){ // name was provided 
-		if (temp.at(2)[0] != '@' || temp.at(2).length() == 1){
+	else if ( commandLine.size() == 3 ){ // name was provided 
+		if (commandLine.at(2)[0] != '@' || commandLine.at(2).length() == 1){
 			return "wrong input";
 		}
 		std::stringstream parsed_name;
 		size_t i = 0;
-		while(i < temp.at(2).length() )
-			parsed_name << temp.at(2)[++i];
-		temp.at(2) = parsed_name.str();
+		while(i < commandLine.at(2).length() )
+			parsed_name << commandLine.at(2)[++i];
+		commandLine.at(2) = parsed_name.str();
 		seq_name << parsed_name;
 	}
 	unsigned int counter = DnaSequenceList::getInstance()->getHowMany(seq_name.str());
@@ -134,12 +105,12 @@ std::string dupCommand::do_command() {
 
 //===========================================================================
 
-lenCommand::lenCommand(std::vector<std::string>& temp):temp(temp){}
+lenCommand::lenCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string lenCommand::do_command() {
 	std::string key;
 	std::stringstream result;
-	key = DnaSequenceList::getInstance()->getKey(temp.at(1));
+	key = DnaSequenceList::getInstance()->getKey(commandLine.at(1));
 	if (key == "wrong input" || key == "wrong input key doesnt not exist" )
 		return key;
 	if (DnaSequenceList::getInstance()->m_dnaData.find( key ) != DnaSequenceList::getInstance()->m_dnaData.end() )
@@ -152,18 +123,18 @@ std::string lenCommand::do_command() {
 
 //===========================================================================
 
-findCommand::findCommand(std::vector<std::string>& temp):temp(temp){}
+findCommand::findCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string findCommand::do_command() {
     std::string key1,key2;
 	std::stringstream result;
-	key1 = DnaSequenceList::getInstance()->getKey(temp.at(1));
+	key1 = DnaSequenceList::getInstance()->getKey(commandLine.at(1));
 	if (key1 == "wrong input")
 		return key1;
-	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
+	key2 = DnaSequenceList::getInstance()->getKey(commandLine.at(2));
 	if(key2 == "wrong input"){
-		DnaSequence temp_seq(temp.at(2));
-		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(&temp_seq);
+		DnaSequence commandLine_seq(commandLine.at(2));
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->findSub(&commandLine_seq);
 	}
 	else if (key2 == "wrong input key doesnt not exist"){
 		return key2;
@@ -180,18 +151,18 @@ std::string findCommand::do_command() {
 
 //===========================================================================
 
-countCommand::countCommand(std::vector<std::string>& temp):temp(temp){}
+countCommand::countCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string countCommand::do_command() {
 	std::string key1,key2;
 	std::stringstream result;
-	key1 = DnaSequenceList::getInstance()->getKey(temp.at(1));
+	key1 = DnaSequenceList::getInstance()->getKey(commandLine.at(1));
 	if (key1 == "wrong input")
 		return key1;
-	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
+	key2 = DnaSequenceList::getInstance()->getKey(commandLine.at(2));
 	if(key2 == "wrong input"){
-		DnaSequence temp_seq(temp.at(2));
-		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->countOccurrences(&temp_seq);
+		DnaSequence commandLine_seq(commandLine.at(2));
+		result << ((DnaSequenceList::getInstance())->m_dnaData[key1])->countOccurrences(&commandLine_seq);
 	}
 	else if (key2 == "wrong input key doesnt not exist"){
 		return key2;
@@ -208,19 +179,19 @@ std::string countCommand::do_command() {
 
 //===========================================================================
 
-findallCommand::findallCommand(std::vector<std::string>& temp):temp(temp){}
+findallCommand::findallCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
 std::string findallCommand::do_command() {
 	std::string key1,key2;
 	std::stringstream result;
 	std::list<int> final_result;
-	key1 = DnaSequenceList::getInstance()->getKey(temp.at(1));
+	key1 = DnaSequenceList::getInstance()->getKey(commandLine.at(1));
 	if (key1 == "wrong input")
 		return key1;
-	key2 = DnaSequenceList::getInstance()->getKey(temp.at(2));
+	key2 = DnaSequenceList::getInstance()->getKey(commandLine.at(2));
 	if(key2 == "wrong input"){
-		DnaSequence temp_seq(temp.at(2));
-		final_result = ((DnaSequenceList::getInstance())->m_dnaData[key1])->findAllSub(&temp_seq);
+		DnaSequence commandLine_seq(commandLine.at(2));
+		final_result = ((DnaSequenceList::getInstance())->m_dnaData[key1])->findAllSub(&commandLine_seq);
 	}
 	else if (key2 == "wrong input key doesnt not exist"){
 		return key2;

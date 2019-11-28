@@ -4,7 +4,6 @@
 #include <iostream>
 #include "dna_seq.h"
 #include <map>
-#include <vector>
 
 class DnaSequenceList {
 	

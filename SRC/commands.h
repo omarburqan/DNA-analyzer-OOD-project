@@ -16,27 +16,28 @@ class Command
 class newCommand:public Command
 {
 	public:
-		newCommand(std::vector<std::string>& temp);
+		newCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
 
 class loadCommand:public Command
 {
 	public:
-		loadCommand(std::vector<std::string>& temp);
+		loadCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
+
 class dupCommand:public Command
 {
 	public:
-		dupCommand(std::vector<std::string>& temp);
+		dupCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
 
 /*****************Analysis Commands*****************/
@@ -44,45 +45,42 @@ class dupCommand:public Command
 class lenCommand:public Command
 {
 	public:
-		lenCommand(std::vector<std::string>& temp);
+		lenCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
+
 class findCommand:public Command
 {
 	public:
-		findCommand(std::vector<std::string>& temp);
+		findCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
+
 class countCommand:public Command
 {
 	public:
-		countCommand(std::vector<std::string>& temp);
+		countCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
+
 class findallCommand:public Command
 {
 	public:
-		findallCommand(std::vector<std::string>& temp);
+		findallCommand(std::vector<std::string>& commandLine);
 		std::string do_command();
 	private:
-		std::vector<std::string>& temp;
+		std::vector<std::string>& commandLine;
 };
 
 /**********************************/
 
-class CommandFactory 
-{
-	public:
-    	Command * getCommand(std::vector<std::string>& temp);
-};
 
-/*********************************/
 
 
 #endif //__COMMANDS_H__
