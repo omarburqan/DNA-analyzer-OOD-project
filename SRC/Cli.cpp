@@ -25,6 +25,7 @@ void printResult(std::string result){
 }
 
 int main(){
+	Command *command;
 	while(1){
 		std::cout << "cmd >>> ";
 		std::string input;
@@ -38,12 +39,14 @@ int main(){
 			continue;
 		}	
 	    CommandFactory factory;
-		Command* command = factory.getCommand(keywords);
+		command = factory.getCommand(keywords);
 		if(command == 0){
-			printResult("wrong input");
-		    return -1;
+			printResult("wrong command , no such command with that name");
+		   	continue;
 		}
-		printResult(command->do_command());	    
+		std::string result = command->do_command();
+		printResult(result);
+		delete command;
 	}	
 
     /*std::map<std::string,DnaSequence*>::iterator it = DnaSequenceList::getInstance()->m_dnaData.begin();

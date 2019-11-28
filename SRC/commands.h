@@ -8,7 +8,8 @@
 class Command 
 {
 	public:
-		virtual std::string do_command() = 0;	
+		virtual std::string do_command() = 0;
+		virtual ~Command();
 };
 
 /****************Creation Commands******************/

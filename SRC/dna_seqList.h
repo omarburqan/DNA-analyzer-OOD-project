@@ -10,7 +10,8 @@ class DnaSequenceList {
 	public:
     	
     	static DnaSequenceList* getInstance();
-    	~DnaSequenceList(){delete[] obj;}
+    	
+    	~DnaSequenceList();
      	
      	unsigned int default_name_counter; 
 

@@ -12,6 +12,9 @@ DnaSequenceList* DnaSequenceList::getInstance(){
 	    obj = new DnaSequenceList(); 
     return obj; 
 }
+DnaSequenceList::~DnaSequenceList(){ 
+	delete obj;
+}
 
 unsigned int DnaSequenceList::getHowMany(std::string name){
 	unsigned int counter = 0;

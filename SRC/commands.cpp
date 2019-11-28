@@ -1,12 +1,14 @@
 #include "commands.h"
 
+Command::~Command(){}
 //===========================================================================
 
 newCommand::newCommand(std::vector<std::string>& commandLine):commandLine(commandLine){}
 
-std::string newCommand::do_command() {
+// cmd >>> new <sequence> [@<sequence_name>]
+std::string newCommand::do_command() { 
 	std::stringstream seq_name;
-    if (commandLine.size() == 2){
+    if (commandLine.size() == 2){ 
 		seq_name << "SeqDefaultName" << ++DnaSequenceList::getInstance()->default_name_counter;
 	}
 	if (commandLine.size() == 3){
@@ -19,10 +21,9 @@ std::string newCommand::do_command() {
 			parsed_name << commandLine.at(2)[i++];
 		 
 		unsigned int counter = DnaSequenceList::getInstance()->getHowMany(parsed_name.str());
+		seq_name << parsed_name.str();
 		if ( counter > 0 )
-			seq_name << parsed_name.str() << counter;
-		else
-			seq_name << parsed_name.str();
+			seq_name << counter ;
 	}
 	return DnaSequenceList::getInstance()->createDna(commandLine.at(1),seq_name.str());
 }

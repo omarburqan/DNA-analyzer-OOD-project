@@ -25,3 +25,4 @@ Command* CommandFactory::getCommand(std::vector<std::string>& commandName) {
     	
     return 0;
 }
+
